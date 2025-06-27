@@ -1,7 +1,10 @@
 import React from 'react'
 import { BottomPart, DayWrapper, TopPart } from './styles'
 
-const Day = () => {
+const Day = ({day}) => {
+  //console.log(day)
+
+  const { date, forecast } = day;
   return (
     <DayWrapper>
       <TopPart>

@@ -6,15 +6,12 @@ import {useWeatherForecast} from '../../utils/useWeatherForecast'
 // 6월27일 5시 수업
 export const AllDays = () => {
   const {days, isLoading} = useWeatherForecast("Seoul")
+  
   return (
-   
     <AllDaysWrapper>
-      <Day/>
-      <Day/>
-      <Day/>
-      <Day/>
-      <Day/>
-      <Day/>
+      {days.map((day)=>(
+        <Day key={day.date} day={day}/>
+      ))}
     </AllDaysWrapper>
 
   )
