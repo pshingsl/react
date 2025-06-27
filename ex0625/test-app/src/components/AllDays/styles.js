@@ -68,6 +68,7 @@ export const BottomPart = styled.div`
   gap: 10px;
   padding-top: 15px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
+  color:white;
   h2 {
     font-weight: 600;
     font-size: 24px;

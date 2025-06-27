@@ -1,10 +1,13 @@
 import React from 'react'
 import { AllDaysWrapper } from './styles';
 import Day from './Day'
+import {useWeatherForecast} from '../../utils/useWeatherForecast'
 
+// 6월27일 5시 수업
 export const AllDays = () => {
+  const {days, isLoading} = useWeatherForecast("Seoul")
   return (
-    <>
+   
     <AllDaysWrapper>
       <Day/>
       <Day/>
@@ -13,7 +16,7 @@ export const AllDays = () => {
       <Day/>
       <Day/>
     </AllDaysWrapper>
-    </>
+
   )
 }
 

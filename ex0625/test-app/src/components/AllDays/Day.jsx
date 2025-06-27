@@ -12,8 +12,8 @@ const Day = () => {
         <img src = "./images/weatherIcons/snow.svg" alt=""></img>
       </TopPart>
       <BottomPart>
-        <h1>21</h1>
-        <h3>06.25</h3>
+        <h1>21°</h1>
+        <h3>06.27</h3>
       </BottomPart>
     </DayWrapper>
   )
