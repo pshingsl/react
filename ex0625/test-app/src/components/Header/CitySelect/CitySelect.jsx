@@ -11,13 +11,17 @@ const CitySelect = () => {
     navigate(`/${newValue.value}`)
   }
 
+  const handleCreate = (inputValue) => {
+    console.log("New Option Created:", inputValue);
+  }
+
   return (
     <SelectWrapper>
       <CreatableSelect
         options={cityOptions}
         onChange={handleChange}
-        defaultInputValue={null}
-        
+        defaultInputValue={handleCreate}
+        value={null}
         className='react-select-container'
         classNamePrefix='react-select'
       />
