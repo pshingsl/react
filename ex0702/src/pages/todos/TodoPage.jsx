@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/ui/Headers';
 import TodoList from '../../components/todo/TodoList';
@@ -14,7 +14,8 @@ import { useAuth } from '../../context/AuthContext';
 
 function TodoPage() {
   const navigate = useNavigate();
-
+  const { logout, currentUser } = useAuth();
+  // 4시수업 TodoContext에파일에 원래 있던 TodoPage에 만들어 놓은 state, 함수들 정리함
   const { todos,
     currentFilter,
     showTodoForm,
@@ -26,9 +27,9 @@ function TodoPage() {
     handleAddTodo,
     handleFilterChange,
     opneTodoForm,
-    closeTodoForm} = useTodo();
+    closeTodoForm } = useTodo();
 
-    const {logout, currentUser} = useAuth();
+
 
   const handleLogout = () => {
     logout();
@@ -39,9 +40,6 @@ function TodoPage() {
     navigate('/login');
     return null;
   }
-
- 
- 
 
   return (
     <div className="bg-light ">

@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
     if (user) {
       setCurrentUser(JSON.parse(user));
     }
+    setLoading(false)
   }, [])
 
   // 로그인

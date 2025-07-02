@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { users } from '../../utils/data'
+import { initialUsers } from '../../utils/data'
 // 0702 3시 수업
 import { useAuth } from '../../context/AuthContext';
+// 0702 5시 수업
+import { userAPI } from '../../utils/data';
 
 const LoginPage = () => {
 
   const navigate = useNavigate();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('')
@@ -21,29 +22,26 @@ const LoginPage = () => {
   }, [currentUser, navigate])
 
   // 로그인 버튼 클릭시 발생하는 이벤트
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     //로그인 검사(원래는 백엔드에서 해야함)
-    // 입력값이 없는 경우
     if (!email || !password) {
       setErrorMessage('모든항목을 입력해주세요.')
       return;
     }
 
-    // 사용자(이메일, 비번 )
-    const foundUser = users.find(user => user.email === email &&
-      user.password === password)
-
-    // 사용자가 있다면 로그인함수에 로그인 표시
-    if (foundUser) {
-      login({ email: foundUser.email })
-      navigate('/todo')
-    } else {
-      //로그인 실패
-      setErrorMessage('잘못된 이메일 또는 비밀번호입니다.')
+    try{
+      const result = await userAPI.login(email, password)
+      if(result.success){
+        login({email : result.user.email})
+        navigate('/todo')
+      }
+    }catch(e){
+        setErrorMessage('잘못된 이메일 또는 비밀번호입니다.')
       return;
     }
+
   }
 
   const handleTestAccountClick = (email, password) => {

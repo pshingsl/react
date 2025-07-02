@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useContext } from "react";
-import {todos as initialTodos} from  '../utils/data.js'
+import {initialTodos} from  '../utils/data.js'
 const TodoContext = createContext();
 
 export const TodoProvider = ({ children }) => {
