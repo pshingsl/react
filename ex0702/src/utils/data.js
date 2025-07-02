@@ -48,6 +48,7 @@ export const todoAPI = {
     return [...initialTodos]
   },
 
+  // 새로운 할 일 추가
   async addTodo(todo) {
     await delay(5000);
     const newTodo = {
@@ -57,11 +58,13 @@ export const todoAPI = {
     return newTodo;
   },
 
+  // 할 일 완료 상태 토글
   async toggleTodo(todoId, isCompleted) {
     await delay(3000)
     return { id: todoId, isCompleted }
   },
 
+  // 삭제 확인 처리
   async deleteTodo(todoId) {
     await delay(3000)
     return todoId

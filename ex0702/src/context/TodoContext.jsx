@@ -4,6 +4,7 @@ import {initialTodos, todoAPI} from  '../utils/data.js'
 const TodoContext = createContext();
 
 export const TodoProvider = ({ children }) => {
+  // 일 추가하는 상태
   const [todos, setTodos] = useState([]);
   const [currentFilter, setCurrentFilter] = useState('all');
 
@@ -21,6 +22,7 @@ export const TodoProvider = ({ children }) => {
 
  
    // 비동기 0702 6시수업
+   // 밑에 있는 데이터들은 사실 백엔드가 가져 있어야함
   const loadTodos = async () => {
     try{
       setLoading(true);
@@ -34,18 +36,41 @@ export const TodoProvider = ({ children }) => {
     }
   }
 
-  const handleAddTodo = (newTodo) => {
-    setTodos(prevTodos => [...prevTodos, newTodo])
+  //새로운 할 일 추가
+  const handleAddTodo = async(newTodo) => {
+    try{
+      const addedTodo = await todoAPI.addTodo(newTodo)
+      setTodos(prevTodos => [...prevTodos, newTodo])
+      return { success : true };
+    }catch(e){
+      return { success : false, error : e.message};
+    }
+    
+   
   }
 
-  const handleConfirmDelete = () => {
-    if (todoToDelete) {
-      setTodos(prevTodos => prevTodos.filter(todo =>
-        todo.id !== todoToDelete
-      ))
+  
+  //삭제 확인 처리
+  const handleConfirmDelete = async () => {
+    if(!todoToDelete) return;
+
+    try{
+     await todoAPI.deleteTodo(todoToDelete)
+      setTodos(prevTodos => prevTodos.filter(todo =>todo.id !== todoToDelete))
       setTodoToDelete(null)
+    }catch(e){
+
+    }finally{
+      setShowConfirmDialog(false)
     }
-    setShowConfirmDialog(false)
+
+    // if (todoToDelete) {
+    //   setTodos(prevTodos => prevTodos.filter(todo =>
+    //     todo.id !== todoToDelete
+    //   ))
+    //   setTodoToDelete(null)
+    // }
+    // setShowConfirmDialog(false)
   }
 
   const handleCancleDelete = () => {
@@ -57,17 +82,26 @@ export const TodoProvider = ({ children }) => {
   const handleFilterChange = (filter) => {
     setCurrentFilter(filter)
   }
-
   const handleDeleteTodo = (todoId) => {
     setTodoToDelete(todoId)
     setShowConfirmDialog(true)
   }
 
-  const handleToggleComplete = (todoId) => {
+  // 할 일 완료 상태 토글
+  const handleToggleComplete = async(todoId) => {
+    try{
+       const todo = todos.find(t => t.id === todoId)
+    if(!todo) return;
+
+    const result = await todoAPI.toggleTodo(todoId, !todo.isCompleted)
     setTodos(
       prevTodos => prevTodos.map(todo =>
-        todo.id === todoId ? { ...todo, isCompleted: !todo.isCompleted } : todo
+        todo.id === todoId ? { ...todo, isCompleted: result.isCompleted } : todo
       ))
+    }catch(e){
+      
+    }
+    
   }
 
   const opneTodoForm = () => setShowTodoForm(true);
