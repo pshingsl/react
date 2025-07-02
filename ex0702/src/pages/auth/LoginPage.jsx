@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { users } from '../../utils/data'
+// 0702 3시 수업
+import { useAuth } from '../../context/AuthContext';
 
-const LoginPage = ({ currentUser, onLogin }) => {
+const LoginPage = () => {
+
   const navigate = useNavigate();
 
-  // 로그인을 하기 위한 이메일, 비밀번호를 가져옴
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('')
+
+   const {currentUser,  login} = useAuth();
 
   useEffect(() => {
     if (currentUser) {
@@ -33,7 +37,7 @@ const LoginPage = ({ currentUser, onLogin }) => {
 
     // 사용자가 있다면 로그인함수에 로그인 표시
     if (foundUser) {
-      onLogin({ email: foundUser.email })
+      login({ email: foundUser.email })
       navigate('/todo')
     } else {
       //로그인 실패
