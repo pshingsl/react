@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useContext } from "react";
-import {initialTodos} from  '../utils/data.js'
+import {initialTodos, todoAPI} from  '../utils/data.js'
 const TodoContext = createContext();
 
 export const TodoProvider = ({ children }) => {
@@ -11,9 +11,28 @@ export const TodoProvider = ({ children }) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [todoToDelete, setTodoToDelete] = useState(null);
 
+   // 비동기 0702 6시수업
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null);
+  
   useEffect(() => {
-    setTodos(initialTodos)
+    loadTodos()
   }, [])
+
+ 
+   // 비동기 0702 6시수업
+  const loadTodos = async () => {
+    try{
+      setLoading(true);
+      const data = await todoAPI.fetchTodos();
+      setTodos(data);
+    }catch(e){
+      setError(true);
+      throw Error();
+    }finally{
+      setLoading(false)
+    }
+  }
 
   const handleAddTodo = (newTodo) => {
     setTodos(prevTodos => [...prevTodos, newTodo])

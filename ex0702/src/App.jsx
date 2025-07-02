@@ -9,9 +9,11 @@ import { TodoProvider } from "./context/TodoContext";
 const AppRoutes = () => {
   const { loading } = useAuth();
 
-  if (loading) {
-    return <div>Loding....</div>
-  }
+  // if (!loading) {
+  //   return <div>Loding....</div>
+  // }
+
+
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
