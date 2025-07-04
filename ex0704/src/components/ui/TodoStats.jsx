@@ -2,13 +2,7 @@
 
 import React, { useMemo } from 'react'
 
-function TodoStats({ todos }) {
-  const stats = useMemo(() => {
-    const completedCount = todos.filter(todo => todo.isCompleted).length;
-    const totalCount = todos.length
-    const progressPercentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
-    return { completedCount, totalCount, progressPercentage }
-  }, [todos])
+function TodoStats({ stats }) {
 
   return (
     <div>

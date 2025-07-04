@@ -42,9 +42,7 @@ function App() {
      <QueryClientProvider  client={queryClient}> 
     <BrowserRouter>
       <AuthProvider>
-        <TodoProvider>
           <AppRoutes />
-        </TodoProvider>
       </AuthProvider>
     </BrowserRouter>
     </QueryClientProvider>
